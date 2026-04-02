@@ -1367,6 +1367,7 @@ body::before {
     }
 
     /* CONTACT */
+    
     #contact .row{
         flex-direction: column;
         gap: 40px;
