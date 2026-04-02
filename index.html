@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/e7289aa9a2.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div id="stars-layer">
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+    </div>
+    
+
+    <div id="header">
+        <div class="container">
+            <nav>
+                <img src="images/logo.png" class="logo">
+                <ul id="sidemenu">
+                    <li><a href="#header">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Technical Skills</a></li>
+                    <li><a href="#portfolio">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-text">
+                <p>|| नमः पार्वती पतये हर हर महादेव ||</p>
+                <h1>Hi, I am <span>Souvik</span> 
+                <br> Sarkar Jr. form Kolkata, India.</h1>
+            </div>
+        </div>
+    </div>
+
+<!-----------------------------------------About----------------------------------------->
+
+    <div id="about">
+        <div class="container">
+            <div class="row">
+                <div class="about-col-1">
+                    <img src="images/2.jpg">
+                </div>
+                <div class="about-col-2">
+                    <h1>About Me</h1>
+                    <p>
+                        <br>
+                        <br>
+                    </p>
+                    <div class="tab-titles">
+                        <p class="tab-links active-link" onclick="opentab('education')">Education</p>
+                        <p class="tab-links" onclick="opentab('skills')">Soft Skills</p>
+                        <p class="tab-links" onclick="opentab('experience')">Experience</p>
+                    </div>
+                    <div class="tab-contents active-tab" id="education">
+                        <ul>
+                            <li><span><strong>B.Tech</strong></span>
+                                <br>
+                                A graduate from Techno India University (2022–2026), I actively contributed to academic projects, 
+                                sharpening my technical and analytical skills. Throughout my journey, I built a strong foundation and prepared 
+                                myself for higher studies, driven by a passion for innovation and continuous growth.
+                                <br>
+                                <br>
+                                Obtained CGPA : <strong>8.0</strong>
+                            </li>
+                            <li><span><strong>M.Tech</strong></span>
+                                <br>
+                                Currently pursuing master’s degree at Techno Main Salt Lake (2026–2028), I am advancing my technical 
+                                expertise and preparing to enter the industry. Focused on practical skills and real-world impact, I am 
+                                actively getting ready to build a strong and successful professional career.
+                                <br>
+                                <br>
+                                Expected <strong>2028</strong>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="skills">
+                        <ul>
+                            <li><span><strong>Leadership & Team Management</strong></span>
+                                <br>
+                                Led multiple academic project teams including 2 final-year and multiple ESD projects, 
+                                ensuring coordination and timely completion.
+                            </li>
+                             <li><span><strong>Adaptability & Collaboration</strong></span>
+                                <br>
+                                Worked with diverse teams across semesters, adapting quickly to different roles and project requirements.
+                            </li>
+                            <li><span><strong>Public Speaking & Group Discussion Skills</strong></span>
+                                <br>
+                                Actively participated in group discussions and debates, demonstrating clear articulation of ideas, 
+                                critical thinking and confidence in presenting viewpoints.
+                            </li>
+                            <li><span><strong>Problem-Solving</strong></span>
+                                <br>
+                                Handled complex project challenges by analyzing issues, identifying practical solutions and 
+                                ensuring progress of work. Took initiative in situations, guided team members, meet deadlines 
+                                and achieve successful project outcomes.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="experience">
+                        <ul>
+                            <li><span><strong>Project Experience</strong></span>
+                                <br>
+                                Worked on multiple academic and personal projects emphasizing problem-solving, clean coding practices 
+                                and practical application development. Built strong experience in debugging and delivering efficient 
+                                solutions. 
+                                <br>
+                                Additionally, contributed to research work with expertise in literature review, problem 
+                                identification, solution design and technical writing.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-----------------------------------------Services----------------------------------------->
+
+<div id="services">
+    <div class="container">
+
+        <h1 class="sub-title">Technical Skills</h1>
+
+        <div class="services-list">
+            <div class="banner">
+                <div class="scene">
+
+                    <!-- Center Character -->
+                    <div class="man">
+                        <img src="images/hello.png" alt="Profile Illustration">
+                    </div>
+
+                    <!-- 3D Skill Slider -->
+                    <div class="slider" id="slider">
+
+                        <div class="item" style="--i:0" data-msg="Completed multiple projects in data-mining and machine-learning, 
+                        demonstrating strong understanding of concepts and hands-on experience in designing, building and
+                         analyzing data-driven solutions to solve real-world problems.">
+                            <img src="images/skill0.jpg" alt="Machine Learning">
+                            <div class="content">Machine Learning</div>
+                        </div>
+
+                        <div class="item" style="--i:1" data-msg="Skilled in Google Workspace, Microsoft Office, LaTeX, GitHub and VS Code
+                        with experience in documentation, collaboration and version management.">
+                            <img src="images/skill1.jpg" alt="Productivity Tools">
+                            <div class="content">Productivity Tools</div>
+                        </div>
+
+                        <div class="item" style="--i:2" data-msg="Proficient in C, C++, Python and Java, with a strong foundation. Throughout 
+                        my academic years, I actively practiced and implemented my coading knowledge for better understanding.">
+                            <img src="images/skill2.jpg" alt="Programming Languages">
+                            <div class="content">Programming Languages</div>
+                        </div>
+
+                        <div class="item" style="--i:3" data-msg="Strong grasp of core computer science concepts including 
+                        Data Structures & Algorithms (DSA) and Object-Oriented Programming (OOP) with the ability to write 
+                        efficient, modular and scalable code for problem-solving and application development.">
+                            <img src="images/skill3.jpg" alt="Core Concepts">
+                            <div class="content">Core Technical Concepts</div>
+                        </div>
+
+                        <div class="item" style="--i:4" data-msg="Strong understanding of Database Management Systems (DBMS), 
+                        including data modeling, normalization, SQL and transaction management with the ability to design
+                        and manage efficient and scalable databases.">
+                            <img src="images/skill4.jpg" alt="Database Management">
+                            <div class="content">Database Management</div>
+                        </div>
+
+                        <div class="item" style="--i:5" data-msg="Strong understanding of Software Designing and Compiler Designing concepts, 
+                        including practical academic experiences.">
+                            <img src="images/skill5.jpg" alt="Software Designing & Compilier Designing">
+                            <div class="content">Software Designing</div>
+                        </div>
+
+                        <div class="item" style="--i:6" data-msg="Proficient in HTML, CSS, and JavaScript with strong 
+                        ability to build responsive user-friendly web interfaces and implement interactive features 
+                        for modern web applications.">
+                            <img src="images/skill6.jpg" alt="Web Design">
+                            <div class="content">Web Development</div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Floating Cursor Message -->
+    
+<div id="cursorMsg"></div>
+
+<!-- Mobile / Small Devices -->
+
+<div class="mobile-skills">
+
+    <div class="skill-card" data-msg="Completed multiple projects in data-mining and machine-learning, demonstrating strong understanding of concepts and hands-on experience in designing, building and analyzing data-driven solutions to solve real-world problems.">
+        <img src="images/skill0.jpg">
+        <h3>Machine Learning</h3>
+    </div>
+
+    <div class="skill-card" data-msg="Skilled in Google Workspace, Microsoft Office, LaTeX, GitHub and VS Code with experience in documentation, collaboration and version management.">
+        <img src="images/skill1.jpg">
+        <h3>Productivity Tools</h3>
+    </div>
+
+    <div class="skill-card" data-msg="Proficient in C, C++, Python and Java, with a strong foundation. Throughout my academic years, I actively practiced and implemented my coding knowledge for better understanding.">
+        <img src="images/skill2.jpg">
+        <h3>Programming Languages</h3>
+    </div>
+
+    <div class="skill-card" data-msg="Strong grasp of core computer science concepts including Data Structures & Algorithms (DSA) and Object-Oriented Programming (OOP) with the ability to write efficient, modular and scalable code.">
+        <img src="images/skill3.jpg">
+        <h3>Core Concepts</h3>
+    </div>
+
+    <div class="skill-card" data-msg="Strong understanding of Database Management Systems (DBMS), including data modeling, normalization, SQL and transaction management.">
+        <img src="images/skill4.jpg">
+        <h3>Database Management</h3>
+    </div>
+
+    <div class="skill-card" data-msg="Strong understanding of Software Designing and Compiler Designing concepts, including practical academic experiences.">
+        <img src="images/skill5.jpg">
+        <h3>Software Designing</h3>
+    </div>
+
+    <div class="skill-card" data-msg="Proficient in HTML, CSS, and JavaScript with strong ability to build responsive user-friendly web interfaces.">
+        <img src="images/skill6.jpg">
+        <h3>Web Development</h3>
+    </div>
+
+</div>
+
+<!-----------------------------------------Portfolio----------------------------------------->
+
+    <div id="portfolio">
+        <div class="container">
+            <h1 class="sub-title">Projects</h1>
+            <div class="work-list">
+                <div class="work">
+                    <img src="images/a.jpg">
+                    <div class="layer">
+                        <h3>FGOIKMeans</h3>
+                        <p>
+                            <br><br>
+                            FGOIKMeans is a hybrid clustering algorithm that integrates Fungal Growth Optimization with 
+                            K-Means to improve centroid initialization. It enhances clustering accuracy, convergence speed 
+                            and stability. It effectively overcome limitations of traditional K-Means clustering method. 
+                            <br>
+                            <br>
+                            Quality Improvement : <strong>~18.92%</strong>
+                        </p>
+                        <a href="https://drive.google.com/drive/folders/1sJfReRxx3VUpquknCkA8v3Edgvmzk0oy?usp=sharing"><i class="fa-solid fa-link"></i></a>
+                    </div>
+                </div>
+                <div class="work">
+                    <img src="images/b.jpg">
+                    <div class="layer">
+                        <h3>IFGO</h3>
+                        <p>
+                            <br><br>
+                            Improved-FGO an clustering algorithm which contains Opposition-based Initialization, Adaptive Strategy Selection and
+                            Multiple Search Strategies. The novelty lies in an improved, adaptive FGO framework with opposition-based initialization
+                            and multi-strategy optimization. 
+                            <br>
+                            <br>
+                            Quality Improvement : <strong>~30.78%</strong>
+                        </p>
+                        <a href="https://drive.google.com/drive/folders/1M8_4jMQ7Wqyj8VtRCKv2n-gfEPB4ir6r?usp=sharing"><i class="fa-solid fa-link"></i></a>
+                    </div>
+                </div>
+            </div>
+            <a href="https://github.com/SouvikSarkarJr" class="btn">Explore More</a>
+        </div>
+    </div>
+
+    <!-- Pop Up -->
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h2>To Discover Projects & Experiments</h2>
+            <button id="yesBtn">View GitHub</button>
+            <button id="noBtn">Stay Here</button>
+        </div>
+    </div>
+
+<!-----------------------------------------Contact----------------------------------------->
+
+    <div id="contact">
+        <div class="container">
+            <div class="row">
+
+                <!-- LEFT -->
+
+                <div class="contact-left">
+
+                    <h1 class="sub-title">Contact Me</h1>
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <p>
+                        <i class="fa-solid fa-phone"></i>
+                        <a href="tel:+916291080287">
+                            +91 6291080287
+                        </a>
+                    </p>
+
+                    <p>
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <a href="https://wa.me/916291080287" target="_blank">
+                            +91 6291080287
+                        </a>
+                    </p>
+
+                    <p>
+                        <i class="fa-solid fa-envelope"></i>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=souviksarkarjr@gmail.com" target="_blank">
+                            souviksarkarjr@gmail.com
+                        </a>
+                    </p>
+                    
+                <br>
+                <br>
+                <br>
+
+                    <a href="cv/souviksarkarjr.pdf" download class="btn btn2">Download CV</a>
+                </div>
+
+                <!-- RIGHT -->
+
+                 <div class="contact-right">
+                    <form action="https://formspree.io/f/xykdwgej" method="POST">
+                        <input type="text" name="Name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" requied>
+                        <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
+                        <button type="submit" class="btn btn2">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+
+    <div class="copyright">
+        <i class="fa-solid fa-om"></i> कृष्णाय वासुदेवाय हरये परमात्मने। प्रणतः क्लेशनाशाय गोविंदाय नमो नमः॥
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
