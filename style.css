@@ -1450,7 +1450,7 @@ body::before {
 
     /* DEFAULT (HIDDEN ON DESKTOP) */
 
-    @media (max-width: 768px){
+    @media (max-width: 480px){
 
     /* HIDE SECTION */
 
@@ -1460,7 +1460,7 @@ body::before {
 
    /* MOBILE ONLY */
 
-    @media (max-width: 768px){
+    @media (max-width: 480px){
         
         .slider{
             display: none;
@@ -1519,7 +1519,7 @@ body::before {
         }
     }
 
-    @media (max-width: 768px){
+    @media (max-width: 480px){
     #services{
         margin-bottom: 20px;  /* or 0 if you want tight */
     }
@@ -1616,13 +1616,13 @@ body::before {
     overflow: hidden;
 }
 
-    /* Mobile  View for Technical Skills */
+    /* Mobile  View for Technical Skills (Oneplus 11R) */
 
 .mobile-skills {
     display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
 
     .mobile-skills {
         display: flex;
@@ -1704,7 +1704,7 @@ body::before {
 
 /* Hide on large screens (desktop/laptop) */
 
-@media (min-width: 768px) {
+@media (min-width: 480px) {
     .mobile-skills {
         display: none;
     }
