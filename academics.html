@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Souvik Sarkar Jr. | Unified Academic Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        darkBg: '#070b14',
+                        cardBg: 'rgba(15, 23, 42, 0.65)',
+                        accentBlue: '#3b82f6',
+                        accentIndigo: '#6366f1',
+                        accentEmerald: '#10b981',
+                        accentCyan: '#06b6d4',
+                        accentAmber: '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #070b14;
+            color: #cbd5e1;
+            overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth; 
+        }
+
+        .ambient-glow {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -2;
+            overflow: hidden;
+            pointer-events: none;
+            will-change: transform;
+        }
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.15;
+            animation: floatOrb 20s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 600px; height: 600px; background: #3b82f6; top: -100px; left: -100px; }
+        .orb-2 { width: 550px; height: 550px; background: #06b6d4; bottom: -100px; right: -100px; animation-delay: -5s; }
+        .orb-3 { width: 450px; height: 450px; background: #f59e0b; top: 40%; left: 50%; animation-duration: 25s; }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 80px) scale(1.15); }
+        }
+
+        .bg-grid-pattern {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 32px 32px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+            transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(245, 158, 11, 0.35);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 25px rgba(245, 158, 11, 0.12);
+            transform: translateY(-4px);
+        }
+
+        /* Active Station Card Effect */
+        .active-station-card {
+            border-color: rgba(236, 72, 153, 0.6) !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(236, 72, 153, 0.25) !important;
+            transform: translateY(-4px);
+        }
+
+        /* Solid Magenta Metro Rail Track with low opacity */
+        .timeline-rail {
+            position: absolute;
+            top: 40px;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            background: #ec4899;
+            opacity: 0.2;
+            border-radius: 4px;
+            z-index: 1;
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.15);
+        }
+
+        .timeline-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .timeline-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal-backdrop {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+        }
+        .modal-backdrop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-container {
+            transform: scale(0.97) translateY(10px);
+            transition: transform 0.2s ease-in-out;
+        }
+        .modal-backdrop.show .modal-container {
+            transform: scale(1) translateY(0);
+        }
+
+        @keyframes pulseMagentaGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.6); }
+            50% { box-shadow: 0 0 0 12px rgba(236, 72, 153, 0); }
+        }
+        .pulse-current {
+            animation: pulseMagentaGlow 2s infinite;
+            border-color: #ec4899 !important;
+        }
+    </style>
+</head>
+<body class="selection:bg-amber-500 selection:text-slate-950">
+
+    <div class="ambient-glow">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+    <div class="bg-grid-pattern"></div>
+
+    <header class="max-w-6xl mx-auto px-4 pt-16 pb-12">
+        <div class="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="absolute -right-20 -top-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex flex-col items-start z-10 text-left">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-500/15 border border-pink-500/30 text-pink-300 font-mono text-xs font-bold tracking-wider uppercase mb-4">
+                    <span class="w-2 h-2 rounded-full bg-pink-400 animate-ping"></span>
+                    Unified Academic Command Center • UG & PG Transit
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-3">
+                    Souvik Sarkar <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-400">Jr.</span>
+                </h1>
+                <p class="text-slate-400 font-mono text-sm tracking-widest uppercase mb-8">TIU & TMSL Integrated Track • 2022–Present</p>
+
+                <div class="grid grid-cols-2 bg-slate-900/80 border border-white/10 px-6 py-4 rounded-2xl shadow-inner w-full md:w-auto">
+                    <div class="pr-6">
+                        <div class="text-2xl md:text-3xl font-extrabold text-cyan-400 font-mono">8.19</div>
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Obtained UG CGPA</div>
+                    </div>
+                    <div class="border-l border-white/10 pl-6">
+                    <div class="text-2xl md:text-3xl font-extrabold text-amber-400 font-mono">0.0</div>
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Obtained PG CGPA</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative z-10 group w-full md:w-auto flex justify-center">
+                <div class="absolute inset-0 bg-gradient-to-tr from-cyan-600 via-emerald-600 to-amber-600 rounded-2xl blur-xl opacity-40 group-hover:opacity-75 transition duration-500"></div>
+                <div class="relative w-full max-w-md md:w-[460px] aspect-[4/3] rounded-2xl border-2 border-white/15 overflow-hidden shadow-2xl bg-slate-900 flex items-center justify-center">
+                    <img src="images/UG.png" alt="Souvik Sarkar Jr." class="w-full h-full object-contain transform group-hover:scale-105 transition duration-500">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 pb-32 relative">
+        <div class="relative">
+            <!-- Solid Magenta Metro Rail Track with low opacity -->
+            <div class="timeline-rail hidden md:block"></div>
+
+            <div class="space-y-16" id="timelineContainer">
+
+                <!-- SECTION: UNDERGRADUATE (TIU) -->
+                <div class="flex items-center justify-center my-6">
+                    <div class="px-6 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs font-bold tracking-widest uppercase shadow-lg backdrop-blur-md">
+                        🚈 Phase I: Undergraduate — Techno India University (TIU) [2022–2026]
+                    </div>
+                </div>
+
+                <!-- Sem 1 -->
+                <div class="timeline-item flex flex-col md:flex-row items-center justify-between relative" data-index="0">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">SEM 01</span>
+                                <span class="font-mono text-sm font-extrabold text-cyan-400">7.46 / 10 SGPA</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Foundational Sciences & Computing</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Establishing core pillars in mathematics, physics, and introductory programming logic.</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-full rounded-full" style="width: 74.6%"></div>
+                            </div>
+
+                            <button onclick="openPdf('UG/Sem01.pdf', 'TIU - Semester 1 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-cyan-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-cyan-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot pulse-current" data-phase="ug">
+                        <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-left mb-4 md:mb-0 px-2 md:pl-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">December 2022</div>
+                        <div class="text-slate-300 text-sm mt-1">Foundational milestone establishing university entry.</div>
+                    </div>
+                </div>
+
+                <!-- Sem 2 -->
+                <div class="timeline-item flex flex-col md:flex-row-reverse items-center justify-between relative" data-index="1">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">SEM 02</span>
+                                <span class="font-mono text-sm font-extrabold text-cyan-400">6.68 / 10 SGPA</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Core Engineering Fundamentals</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Expanding into electrical circuits, engineering mechanics, chemistry, and C programming.</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-full rounded-full" style="width: 66.8%"></div>
+                            </div>
+
+                            <button onclick="openPdf('UG/Sem02.pdf', 'TIU - Semester 2 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-cyan-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-cyan-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot" data-phase="ug">
+                        <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-right mb-4 md:mb-0 px-2 md:pr-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">June 2023</div>
+                        <div class="text-slate-300 text-sm mt-1">First-year consolidation and systems breakdown.</div>
+                    </div>
+                </div>
+
+                <!-- Sem 3 -->
+                <div class="timeline-item flex flex-col md:flex-row items-center justify-between relative" data-index="2">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">SEM 03</span>
+                                <span class="font-mono text-sm font-extrabold text-cyan-400">8.40 / 10 SGPA</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Data Structures & Architecture</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Transitioning into computer science pillars including Data Structures, Digital Logic, and Computer Organization.</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-full rounded-full" style="width: 84%"></div>
+                            </div>
+
+                            <button onclick="openPdf('UG/Sem03.pdf', 'TIU - Semester 3 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-cyan-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-cyan-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot" data-phase="ug">
+                        <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-left mb-4 md:mb-0 px-2 md:pl-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">December 2023</div>
+                        <div class="text-slate-300 text-sm mt-1">Deep dive into core algorithmic structures.</div>
+                    </div>
+                </div>
+
+                <!-- Sem 4 -->
+                <div class="timeline-item flex flex-col md:flex-row-reverse items-center justify-between relative" data-index="3">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">SEM 04</span>
+                                <span class="font-mono text-sm font-extrabold text-cyan-400">8.15 / 10 SGPA</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Advanced Programming & Systems</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Object-Oriented Programming, Graph Theory, Microprocessors, and system-level applications.</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-full rounded-full" style="width: 81.5%"></div>
+                            </div>
+
+                            <button onclick="openPdf('UG/Sem04.pdf', 'TIU - Semester 4 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-cyan-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-cyan-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot" data-phase="ug">
+                        <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-right mb-4 md:mb-0 px-2 md:pr-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">June 2024</div>
+                        <div class="text-slate-300 text-sm mt-1">Mid-program engineering proficiency expansion.</div>
+                    </div>
+                </div>
+
+                <!-- Sem 5 -->
+                <div class="timeline-item flex flex-col md:flex-row items-center justify-between relative" data-index="4">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">SEM 05</span>
+                                <span class="font-mono text-sm font-extrabold text-cyan-400">7.80 / 10 SGPA</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Operating Systems & DBMS</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Tackling core system subjects like Operating Systems, Database Management Systems, and Algorithm Analysis.</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-full rounded-full" style="width: 78%"></div>
+                            </div>
+
+                            <button onclick="openPdf('UG/Sem05.pdf', 'TIU - Semester 5 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-cyan-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-cyan-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot" data-phase="ug">
+                        <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-left mb-4 md:mb-0 px-2 md:pl-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">December 2024</div>
+                        <div class="text-slate-300 text-sm mt-1">Core system architecture and database design focus.</div>
+                    </div>
+                </div>
+
+                <!-- Sem 6 -->
+                <div class="timeline-item flex flex-col md:flex-row-reverse items-center justify-between relative" data-index="5">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">SEM 06</span>
+                                <span class="font-mono text-sm font-extrabold text-cyan-400">8.11 / 10 SGPA</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Computer Networks & Web Tech</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Broadening full-stack and networking capability through Computer Networks, Software Engineering, and Compiler Design.</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-full rounded-full" style="width: 81.1%"></div>
+                            </div>
+
+                            <button onclick="openPdf('UG/Sem06.pdf', 'TIU - Semester 6 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-cyan-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-cyan-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot" data-phase="ug">
+                        <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-right mb-4 md:mb-0 px-2 md:pr-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">June 2025</div>
+                        <div class="text-slate-300 text-sm mt-1">Networking protocols and distributed system frameworks.</div>
+                    </div>
+                </div>
+
+                <!-- Sem 7 -->
+                <div class="timeline-item flex flex-col md:flex-row items-center justify-between relative" data-index="6">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">SEM 07</span>
+                                <span class="font-mono text-sm font-extrabold text-cyan-400">9.06 / 10 SGPA</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Machine Learning & Project I</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Venturing into advanced specialization with Machine Learning, communication networks, and initial independent research work.</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-full rounded-full" style="width: 90.6%"></div>
+                            </div>
+
+                            <button onclick="openPdf('UG/Sem07.pdf', 'TIU - Semester 7 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-cyan-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-cyan-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot" data-phase="ug">
+                        <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-left mb-4 md:mb-0 px-2 md:pl-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">December 2025</div>
+                        <div class="text-slate-300 text-sm mt-1">Specialization and capstone project initiation.</div>
+                    </div>
+                </div>
+
+                <!-- Sem 8 -->
+                <div class="timeline-item flex flex-col md:flex-row-reverse items-center justify-between relative" data-index="7">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">SEM 08</span>
+                                <span class="font-mono text-sm font-extrabold text-cyan-400">9.84 / 10 SGPA</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Data Mining & Project II</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Culminating the undergraduate degree curriculum with advanced data mining concepts and research delivery.</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-full rounded-full" style="width: 98.4%"></div>
+                            </div>
+
+                            <button onclick="openPdf('UG/Sem08.pdf', 'TIU - Semester 8 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-cyan-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-cyan-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot" data-phase="ug">
+                        <div class="w-2 h-2 rounded-full bg-cyan-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-right mb-4 md:mb-0 px-2 md:pr-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">June 2026</div>
+                        <div class="text-slate-300 text-sm mt-1">High-performance academic finish at TIU.</div>
+                    </div>
+                </div>
+
+                <!-- UG Degree Collection (Highlighted in GREEN) -->
+
+                <div class="timeline-item flex flex-col md:flex-row items-center justify-between relative" data-index="8">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative border-emerald-500/40 group">
+                            <div class="absolute -top-3 -right-3 px-3 py-1 bg-emerald-500 text-slate-950 font-mono text-xs font-black uppercase rounded-full shadow-lg">UG CONFERRED</div>
+                            
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">TIU MILESTONE</span>
+                                <span class="font-mono text-sm font-extrabold text-emerald-400">VERIFIED</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">🎓 UG Degree Certificate Collection</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Official Undergraduate degree credentialing and bachelor's completion verification at Techno India University (TIU).</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-cyan-500 to-emerald-500 h-full rounded-full" style="width: 100%"></div>
+                            </div>
+
+                            <button onclick="openPdf('UG/UG-Cirtificate.pdf', 'TIU - UG Degree Certificate')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-emerald-500/20 cursor-pointer">
+                                <span>Inspect Degree Certificate</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-10 h-10 rounded-full bg-slate-900 border-4 border-emerald-500 z-10 items-center justify-center shadow-xl node-dot" data-phase="emerald">
+                        <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-left mb-4 md:mb-0 px-2 md:pl-6">
+                        <div class="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest">August 2026</div>
+                        <div class="text-slate-200 text-sm font-semibold mt-1">Transitioning to Postgraduate Phase ⚡</div>
+                    </div>
+                </div>
+
+                <!-- SECTION: POSTGRADUATE (TMSL) -->
+
+                <div class="flex items-center justify-center my-12 pt-6">
+                    <div class="px-6 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono text-xs font-bold tracking-widest uppercase shadow-lg backdrop-blur-md">
+                        🚈 Phase II: Postgraduate — Techno Main Salt Lake (TMSL) [2026-2028]
+                    </div>
+                </div>
+
+                <!-- PG Sem 1 -->
+                <div class="timeline-item flex flex-col md:flex-row-reverse items-center justify-between relative" data-index="9">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">PG SEM 01</span>
+                                <span class="font-mono text-sm font-extrabold text-amber-400">ACTIVE</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Advanced Master's Specialization</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Initiating postgraduate curriculum in advanced computer science architectures and research methodologies at TMSL.</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-amber-500 to-yellow-400 h-full rounded-full animate-pulse" style="width: 50%"></div>
+                            </div>
+
+                            <button onclick="openPdf('PG/PG-Sem01.pdf', 'TMSL - PG Semester 1 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-amber-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-amber-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot" data-phase="pg">
+                        <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-right mb-4 md:mb-0 px-2 md:pr-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">December 2026</div>
+                        <div class="text-slate-300 text-sm mt-1">Postgraduate entry and advanced module kickoff.</div>
+                    </div>
+                </div>
+
+                <!-- PG Sem 2 -->
+                <div class="timeline-item flex flex-col md:flex-row items-center justify-between relative" data-index="10">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">PG SEM 02</span>
+                                <span class="font-mono text-sm font-extrabold text-amber-400">PENDING</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">.....</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">....................</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-amber-500 to-yellow-400 h-full rounded-full" style="width: 50%"></div>
+                            </div>
+
+                            <button onclick="openPdf('PG/PG-Sem02.pdf', 'TMSL - PG Semester 2 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-amber-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-amber-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot" data-phase="pg">
+                        <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-left mb-4 md:mb-0 px-2 md:pl-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">June 2027</div>
+                        <div class="text-slate-300 text-sm mt-1">........................................</div>
+                    </div>
+                </div>
+
+                <!-- PG Sem 3 -->
+                <div class="timeline-item flex flex-col md:flex-row-reverse items-center justify-between relative" data-index="11">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">PG SEM 03</span>
+                                <span class="font-mono text-sm font-extrabold text-amber-400">PENDING</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">.....</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">....................</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-amber-500 to-yellow-400 h-full rounded-full" style="width: 50%"></div>
+                            </div>
+
+                            <button onclick="openPdf('PG/PG-Sem03.pdf', 'TMSL - PG Semester 3 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-amber-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-amber-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot" data-phase="pg">
+                        <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-right mb-4 md:mb-0 px-2 md:pr-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">December 2027</div>
+                        <div class="text-slate-300 text-sm mt-1">........................................</div>
+                    </div>
+                </div>
+
+                <!-- PG Sem 4 -->
+                <div class="timeline-item flex flex-col md:flex-row items-center justify-between relative" data-index="12">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative group">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">PG SEM 04</span>
+                                <span class="font-mono text-sm font-extrabold text-amber-400">PENDING</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">.....</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">....................</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-amber-500 to-yellow-400 h-full rounded-full" style="width: 50%"></div>
+                            </div>
+
+                            <button onclick="openPdf('PG/PG-Sem04.pdf', 'TMSL - PG Semester 4 Result')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-amber-500/20 cursor-pointer">
+                                <span>Inspect Marksheet</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-amber-500 z-10 items-center justify-center shadow-lg transition-all duration-300 node-dot" data-phase="pg">
+                        <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-left mb-4 md:mb-0 px-2 md:pl-6">
+                        <div class="font-mono text-xs font-bold text-slate-500 uppercase tracking-widest">June 2028</div>
+                        <div class="text-slate-300 text-sm mt-1">........................................</div>
+                    </div>
+                </div>
+
+                <!-- PG Degree Collection (Redesigned with UG theme & emerald node border) -->
+
+                <div class="timeline-item flex flex-col md:flex-row-reverse items-center justify-between relative" data-index="13">
+                    <div class="w-full md:w-[calc(50%-3rem)] order-2 md:order-1">
+                        <div class="glass-card p-6 md:p-8 rounded-2xl relative border-emerald-500/40 group">
+                            <div class="absolute -top-3 -right-3 px-3 py-1 bg-emerald-500 text-slate-950 font-mono text-xs font-black uppercase rounded-full shadow-lg">PG CONFERRED</div>
+                            
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="font-mono text-xs font-bold px-3 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">TMSL MILESTONE</span>
+                                <!-- <span class="font-mono text-sm font-extrabold text-emerald-400">VERIFIED</span> -->
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">🎓 PG Degree Certificate Collection</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">Official Postgraduate degree credentialing and master's completion verification at Techno Main Salt Lake (TMSL).</p>
+                            
+                            <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden mb-6">
+                                <div class="bg-gradient-to-r from-cyan-500 to-emerald-500 h-full rounded-full" style="width: 100%"></div>
+                            </div>
+
+                            <button onclick="openPdf('PG/PG-Cirtificate.pdf', 'TMSL - PG Degree Certificate')" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-emerald-500/20 cursor-pointer">
+                                <span>Inspect Degree Certificate</span>
+                                <svg class="w-4 h-4 fill-none stroke-currentColor stroke-2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-10 h-10 rounded-full bg-slate-900 border-4 border-emerald-500 z-10 items-center justify-center shadow-xl node-dot" data-phase="emerald">
+                        <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+                    </div>
+
+                    <div class="w-full md:w-[calc(50%-3rem)] order-1 md:order-2 md:text-right mb-4 md:mb-0 px-2 md:pr-6">
+                        <div class="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest">August 2028</div>
+                        <div class="text-slate-200 text-sm font-semibold mt-1">Mster's Degree Completed 🚀</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal with Floating Independent Close Button -->
+
+    <div id="pdfModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6">
+        <div class="absolute inset-0 bg-slate-950/85 backdrop-blur-md transition-opacity duration-200" onclick="closeModal()"></div>
+
+        <!-- Floating Command Modal -->
+
+        <div class="modal-container glass-card relative w-full max-w-5xl h-[90vh] rounded-2xl flex flex-col overflow-hidden border border-white/10 shadow-[0_0_60px_-15px_rgba(245,158,11,0.3)] z-10">
+            
+            <!-- Top Header Bar with Integrated Close Button -->
+             
+            <div class="flex items-center justify-between px-6 py-3.5 bg-slate-900/95 border-b border-white/10">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse shrink-0"></div>
+                    <h3 id="modalTitle" class="text-xs sm:text-sm font-bold text-white font-mono tracking-wide truncate">Academic Document</h3>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <a id="modalDownload" href="#" target="_blank" download class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:bg-amber-600/30 hover:border-amber-500/40 text-xs font-bold text-slate-300 hover:text-amber-400 transition">
+                        <svg class="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span class="hidden sm:inline">Download</span>
+                    </a>
+                    <a id="modalOpenTab" href="#" target="_blank" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:bg-amber-600/30 hover:border-amber-500/40 text-xs font-bold text-slate-300 hover:text-amber-400 transition">
+                        <svg class="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        <span class="hidden sm:inline">Open Tab</span>
+                    </a>
+                    
+                    <!-- Integrated Close Button -->
+
+                    <button onclick="closeModal()" aria-label="Close modal" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:bg-red-500 hover:text-white hover:border-red-500 text-xs font-bold text-slate-300 transition cursor-pointer ml-1">
+                        <svg class="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        <span>Close</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PDF Viewer Body -->
+
+            <div class="flex-1 w-full bg-white relative flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+                    <div class="w-8 h-8 rounded-full border-2 border-slate-300 border-t-amber-600 animate-spin"></div>
+                </div>
+                <iframe id="pdfFrame" class="w-full h-full border-none relative z-10 bg-white"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+            updateActiveNode();
+        });
+
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        
+        // Dynamic active current node & card tracker on scroll
+        function updateActiveNode() {
+            const windowHeight = window.innerHeight;
+            let closestItem = null;
+            let closestDistance = Infinity;
+
+            timelineItems.forEach((item) => {
+                const rect = item.getBoundingClientRect();
+                const distance = Math.abs(rect.top - windowHeight * 0.4);
+                
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestItem = item;
+                }
+            });
+
+            timelineItems.forEach((item) => {
+                const dot = item.querySelector('.node-dot');
+                const card = item.querySelector('.glass-card');
+                
+                if (item === closestItem) {
+                    if (dot) dot.classList.add('pulse-current');
+                    if (card) card.classList.add('active-station-card');
+                } else {
+                    if (dot) {
+                        dot.classList.remove('pulse-current');
+                        const phase = dot.getAttribute('data-phase');
+                        if (phase === 'pg') {
+                            dot.style.borderColor = '#f59e0b';
+                        } else if (phase === 'emerald') {
+                            dot.style.borderColor = '#10b981';
+                        } else {
+                            dot.style.borderColor = '#06b6d4';
+                        }
+                    }
+                    if (card) card.classList.remove('active-station-card');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            window.requestAnimationFrame(updateActiveNode);
+        }, { passive: true });
+
+        const modal = document.getElementById('pdfModal');
+        const pdfFrame = document.getElementById('pdfFrame');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDownload = document.getElementById('modalDownload');
+        const modalOpenTab = document.getElementById('modalOpenTab');
+
+        function openPdf(pdfUrl, titleText) {
+            modalTitle.textContent = titleText || 'Academic Document';
+            modalDownload.href = pdfUrl;
+            modalOpenTab.href = pdfUrl;
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+
+            setTimeout(() => {
+                pdfFrame.src = pdfUrl + '#toolbar=1&view=FitH';
+            }, 50);
+        }
+
+        function closeModal() {
+            pdfFrame.src = '';
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.classList.contains('absolute')) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('show')) closeModal();
+        });
+    </script>
+</body>
+</html>

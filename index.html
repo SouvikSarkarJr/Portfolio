@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/e7289aa9a2.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- Background -->
+
+    <div id="stars-layer">
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+    </div>
+    <div class="space-container">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+    </div>
+
+<!-----------------------------------------Nav-Bar----------------------------------------->
+
+    <div id="header">
+        <div class="container">
+            <nav>
+                <img src="images/logo.png" class="logo">
+                <ul id="sidemenu">
+                    <li><a href="#header">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Technical Skills</a></li>
+                    <li><a href="#portfolio">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-text">
+                <p>|| नमः पार्वती पतये हर हर महादेव ||</p>
+                <h1>Hi, I am <span>Souvik</span> 
+                <br>Sarkar Jr. form Kolkata, India.</h1>
+            </div>
+        </div>
+    </div>
+
+<!-----------------------------------------About----------------------------------------->
+
+    <div id="about">
+        <div class="container">
+            <div class="row">
+                <div class="about-col-1">
+                    <img src="images/2.jpg">
+                </div>
+                <div class="about-col-2">
+                    <h1>About Me</h1>
+                    <p>
+                        <br>
+                        <br>
+                    </p>
+                    <div class="tab-titles">
+                        <p class="tab-links active-link" onclick="opentab('education')">Education</p>
+                        <p class="tab-links" onclick="opentab('skills')">Soft Skills</p>
+                        <p class="tab-links" onclick="opentab('experience')">Experience</p>
+                    </div>
+                    <div class="tab-contents active-tab" id="education">
+                        <ul>
+                            <li><span><strong>B.Tech</strong></span>
+                                <br>
+                                A graduate from Techno India University (2022–2026), I actively contributed to academic projects, 
+                                sharpening my technical and analytical skills. I built a strong foundation and prepared 
+                                myself for higher studies, driven by a passion for innovation and continuous growth throughout my journey.
+                                <br>
+                                Obtained CGPA : <strong>8.19 out of 10.00 </strong>
+                            </li>
+                            <li><span><strong>M.Tech</strong></span>
+                                <br>
+                                Currently pursuing master’s degree at Techno Main Salt Lake (2026–2028), I am advancing my technical 
+                                expertise and preparing to enter the industry. Focused on practical skills and real-world impact; I am 
+                                actively getting ready to build a strong and successful professional career.
+                                <br>
+                                Expected <strong>2028</strong>
+                            </li>
+                        </ul>
+                        <button class="academic-btn" onclick="window.location.href='academics.html'">
+                                    Show Academic Journey
+                                </button>
+                    </div>
+                    <div class="tab-contents" id="skills">
+                        <ul>
+
+                            <li><span><strong>Public Speaking & Group Discussion Skills</strong></span>
+                                <br>
+                                <br>
+                                Leveraged formal training from Xbridge, Dunlop to excel in high-stakes group discussions and debates. 
+                                Skilled in applying critical thinking and logical reasoning to articulate viewpoints with clarity and 
+                                professional confidence.
+                            </li>
+
+                            <li><span><strong>Leadership & Team Management</strong></span>
+                                <br><br>
+                                Proven track record of leadership as a Class Representative for 100+ students (UG) and 10+ students (PG), fostering 
+                                a collaborative environment between the student body and faculty. Effectively managed various 
+                                academic teams through the full project lifecycle from conceptualization to final delivery while 
+                                maintaining high team morale and strict adherence to deadlines.
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="tab-contents" id="experience">
+                        <ul>
+                            <li><span><strong>Project Experience</strong></span>
+                                <br>
+                                <br>
+                                Worked on multiple academic and personal projects emphasizing problem-solving, clean coding practices 
+                                and practical application development. Built strong experience in debugging and delivering efficient 
+                                solutions.
+                                <br>
+                                <br>
+                                Additionally, contributed to research work with expertise in literature review, problem 
+                                identification, solution design and technical writing.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!---------------------------------------Services--------------------------------------->
+
+    <div id="services">
+        <div class="container">
+            <br>
+            <br>
+            <br>
+            <h1 class="sub-title">Technical Skills</h1>
+            <div class="services-list">
+                <div class="banner">
+                    <div class="scene">
+
+                        <!-- Center Fig. -->
+
+                        <div class="man">
+                            <img src="images/hello.png" alt="Profile Illustration">
+                        </div>
+
+                        <!-- 3D Skill Slider -->
+
+                        <div class="slider" id="slider">
+
+                            <!-- Machine Learning -->
+
+                            <div class="item" style="--i:0" data-msg="I have extensive expertise in machine learning and data science, focusing on building end-to-end pipelines that turn unstructured data into high-impact business intelligence.">
+                                <img src="images/skill0.jpg" alt="Machine Learning">
+                                <div class="content">Machine Learning</div>
+                            </div>
+
+                            <!-- Documentation -->
+
+                            <div class="item" style="--i:1" data-msg="I am highly proficient in LaTeX for professional typesetting, alongside extensive experience in MS Office and Google Workspace to deliver streamlined, collaborative, and polished documentation for any project.">
+                                <img src="images/skill1.jpg" alt="Productivity Tools">
+                                <div class="content">Productivity Tools</div>
+                            </div>
+
+                            <!-- AI -->
+
+                            <div class="item" style="--i:2" data-msg="I have completed specialized courses in Artificial Intelligence, focusing on its efficient application. I leverage this emerging technology to optimize workflows, enhance productivity, and deliver innovative, future-ready solutions.">
+                                <img src="images/skill2.jpg" alt="Artificial Intelligence">
+                                <div class="content">Artificial Intelligence</div>
+                            </div>
+
+                            <!-- Technical Concepts -->
+
+                            <div class="item" style="--i:3" data-msg="I possess a strong foundation in Object-Oriented Programming, Data Structures & Algorithms. My academic background in Software Engineering and Compiler Design is further demonstrated through various comprehensive hands-on projects.">
+                                <img src="images/skill3.jpg" alt="Core Concepts">
+                                <div class="content">Technical Concepts</div>
+                            </div>
+
+                            <!-- Database Management -->
+
+                            <div class="item" style="--i:4" data-msg="I possess deep expertise in Database Management Systems and SQL, enabling me to design efficient schemas, execute complex queries, and manage data integrity to drive insightful, data-driven solutions.">
+                                <img src="images/skill4.jpg" alt="Database Management">
+                                <div class="content">Database Management</div>
+                            </div>
+
+                            <!-- Web Dev. -->
+
+                            <div class="item" style="--i:5" data-msg="As a versatile software developer, I leverage HTML, CSS, and JavaScript to build responsive, user-centric web applications. My different projects showcases clean code and seamless digital experiences.">
+                                <img src="images/skill5.jpg" alt="Web Development">
+                                <div class="content">Web Development</div>
+                            </div>
+
+                            <!-- Code -->
+
+                            <div class="item" style="--i:6" data-msg="I am a dedicated software developer proficient in C, C++ and Python. I leverage strong expertise in Data Structures & Algorithms and Object Oriented Programming principles to build efficient, scalable and innovative solutions.">
+                                <img src="images/skill6.jpg" alt="Coading Languages">
+                                <div class="content">Coading Languages</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cursorMsg"></div>
+
+<!-----------------------------------------Portfolio----------------------------------------->
+
+    <div id="portfolio">
+        <div class="container">
+            <h1 class="sub-title">Projects</h1>
+            <div class="work-list">
+
+                <!-- Project 01 -->
+                
+                <div class="work">
+                    <img src="images/a.jpg" alt="FGOIKMeans">
+                    <div class="layer">
+                        <h3>FGOIKMeans</h3>
+                        <p>
+                            <br><br>
+                            FGOIKMeans is a hybrid clustering algorithm that integrates Fungal Growth Optimization with 
+                            K-Means to improve centroid initialization. It enhances clustering accuracy, convergence speed 
+                            and stability. It effectively overcomes limitations of traditional K-Means clustering method. 
+                            <br><br>
+                            Quality Improvement : <strong>~18.92%</strong>
+                        </p>
+                        <a href="https://github.com/SouvikSarkarJr/Project-X-FGOIKMeans"><i class="fa-solid fa-link"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 02 -->
+                
+                <div class="work">
+                    <img src="images/b.jpg" alt="IFGO">
+                    <div class="layer">
+                        <h3>IFGO</h3>
+                        <p>
+                            <br><br>
+                            Improved-FGO is a clustering algorithm which contains Opposition-based Initialization, Adaptive Strategy Selection and
+                            Multiple Search Strategies. The novelty lies in an improved, adaptive FGO framework with opposition-based initialization
+                            and multi-strategy optimization. 
+                            <br><br>
+                            Quality Improvement : <strong>~30.78%</strong>
+                        </p>
+                        <a href="https://github.com/SouvikSarkarJr/Project-X-SAIFGO"><i class="fa-solid fa-link"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 03 -->
+                
+                <div class="work work-center">
+                    <img src="images/c.jpg" alt="Bi-Directional Sign Language Translator">
+                    <div class="layer">
+                        <h3>Bi-Directional Sign Language Translator</h3>
+                        <p>
+                            <br><br>
+                            Engineered an end-to-end bi-directional translation framework converting sign language into English text
+                            and vice-versa. Extracted high fidelity 3D spatial temporal hand, face and body pose landmarks to optimize feature
+                            representation and reduce computational overhead.
+                        </p>
+                        <a href="https://github.com/SouvikSarkarJr/Project-X-SignLanguage-Translator"><i class="fa-solid fa-link"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <a href="https://github.com/SouvikSarkarJr" class="btn">Explore More</a>
+        </div>
+    </div>
+    
+
+    <!-- Pop Up -->
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h2>To Discover Projects & Experiments</h2>
+            <button id="yesBtn">View GitHub</button>
+            <button id="noBtn">Stay Here</button>
+        </div>
+    </div>
+
+<!-----------------------------------------Contact----------------------------------------->
+
+    <div id="contact">
+        <div class="container">
+            <div class="row">
+
+                <!-- Left -->
+
+                <div class="contact-left">
+                    <h1 class="sub-title">Let's <span>Connect</span></h1>
+                    <p class="contact-description">Looking to build something great or just swap ideas ?? 
+                    <br>Let's connect—the coffee's on me.</p>
+
+                    <div class="contact-list">
+
+                        <!-- WhatsApp -->
+
+                        <a href="https://wa.me/916291080287" class="contact-item">
+                            <div class="contact-info">
+                                <span class="label">WhatsApp</span>
+                                <span class="data">+91 6291080287</span>
+                            </div>
+                            <div class="icon-box"><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
+
+                        <!-- Email -->
+
+                        <a href="mailto:souviksarkarjr@gmail.com" class="contact-item">
+                            <div class="contact-info">
+                                <span class="label">Email</span>
+                                <span class="data">souviksarkarjr@gmail.com</span>
+                            </div>
+                            <div class="icon-box"><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
+                    </div>
+
+                    <div class="action-area">
+                        <a href="CV.pdf" download class="btn btn2">
+                            Download CV <i class="fa-solid fa-download"></i></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right -->
+
+                 <div class="contact-right">
+                    <form action="https://formspree.io/f/xykdwgej" method="POST">
+                        <input type="text" name="Name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" requied>
+                        <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
+                        <button type="submit" class="btn btn2" style="margin-left: 150px;">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+
+    <div class="copyright">
+        <i class="fa-solid fa-om"></i> कृष्णाय वासुदेवाय हरये परमात्मने। प्रणतः क्लेशनाशाय गोविंदाय नमो नमः॥
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
