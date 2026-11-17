@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Souvik Sarkar Jr. — Academic Transcript</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Instrument Serif', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #050505;
+            color: #e5e5e5;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Interactive Constellation Canvas */
+        #bgCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Subtle Top Ambient Vignette */
+        .ambient-vignette {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.055), transparent 60%);
+        }
+
+        .modal-backdrop { opacity: 0; visibility: hidden; transition: all 0.2s ease; }
+        .modal-backdrop.show { opacity: 1; visibility: visible; }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-white selection:text-black">
+
+    <!-- Reactive Background Layers -->
+
+    <canvas id="bgCanvas"></canvas>
+    <div class="ambient-vignette"></div>
+
+    <div class="max-w-4xl mx-auto px-5 sm:px-8 py-12 sm:py-16 relative z-10">
+
+        <!-- Monochrome Editorial Masthead with Manual Portrait Slideshow -->
+
+        <header class="border-b-2 border-white pb-10 mb-10 flex flex-col md:flex-row md:items-stretch justify-between gap-8">
+            
+            <!-- Left: Big Display Heading & Interactive PG / UG Option Buttons -->
+
+            <div class="flex-1 flex flex-col justify-between">
+                <div>
+                    <h1 class="font-serif text-5xl sm:text-6xl lg:text-[4.5rem] text-white tracking-tight leading-[0.95]">
+                        Souvik Sarkar Jr.
+                    </h1>
+                    <p id="institutionSubtitle" class="text-sm sm:text-base text-neutral-400 mt-4">
+                        Techno Main Salt Lake (TMSL)
+                    </p>
+                </div>
+
+                <!-- PG (Priority) & UG Buttons -->
+
+                <div class="grid grid-cols-2 gap-3.5 font-mono mt-8 pt-6 border-t border-neutral-800/90">
+                    <button
+                        type="button"
+                        id="btn-pg"
+                        onclick="switchTrack('pg')"
+                        class="text-left p-4 rounded-xl border transition-all duration-200 cursor-pointer bg-white/[0.06] border-white shadow-lg opacity-100"
+                    >
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] uppercase tracking-wider text-neutral-400">Post Graduate</span>
+                            <span id="dot-pg" class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                        </div>
+                        <div class="text-2xl sm:text-3xl font-bold text-white mt-1">Active</div>
+                        <br>
+                        <div class="text-[11px] text-neutral-400 mt-0.5">Academic Year : 2026–2028</div>
+                    </button>
+
+                    <button
+                        type="button"
+                        id="btn-ug"
+                        onclick="switchTrack('ug')"
+                        class="text-left p-4 rounded-xl border transition-all duration-200 cursor-pointer bg-neutral-950/60 border-neutral-800 hover:border-neutral-600 opacity-65 hover:opacity-100"
+                    >
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] uppercase tracking-wider text-neutral-400">Under Graduate</span>
+                            <span id="dot-ug" class="w-1.5 h-1.5 rounded-full bg-neutral-700"></span>
+                        </div>
+                        <div class="text-2xl sm:text-3xl font-bold text-neutral-200 mt-1">8.19</div>
+                        <br>
+                        <div class="text-[11px] text-neutral-400 mt-0.5">Academic Year : 2022–2026</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right: Manual Portrait Slideshow Frame (PG & UG) -->
+            <div class="w-full md:w-72 lg:w-80 shrink-0">
+                <div class="relative w-full aspect-[4/3] md:aspect-[5/4] rounded-xl border border-neutral-700/90 hover:border-white/50 bg-neutral-950/80 backdrop-blur-md p-2 shadow-2xl overflow-hidden flex items-center justify-center transition-colors duration-300 group">
+                    
+                    <!-- Slide 1: PG Portrait -->
+                    <img 
+                        id="slide-0"
+                        src="images/PG.jpg.avif" 
+                        alt="Souvik Sarkar Jr. — PG" 
+                        class="w-full h-full object-contain rounded-lg transition-opacity duration-300 opacity-100"
+                        onerror="this.style.display='none'; document.getElementById('fallback-0').classList.remove('hidden');"
+                    >
+                    <div id="fallback-0" class="hidden flex-col items-center justify-center text-center p-4 font-mono text-xs text-neutral-500">
+                        <span class="text-white font-bold text-sm mb-1">images/PG.png</span>
+                        <span>PG Portrait</span>
+                    </div>
+
+                    <!-- Slide 2: UG Portrait -->
+                    <img 
+                        id="slide-1"
+                        src="images/UG.png" 
+                        alt="Souvik Sarkar Jr. — UG" 
+                        class="hidden w-full h-full object-contain rounded-lg transition-opacity duration-300 opacity-100"
+                        onerror="this.style.display='none'; document.getElementById('fallback-1').classList.remove('hidden');"
+                    >
+                    <div id="fallback-1" class="hidden flex-col items-center justify-center text-center p-4 font-mono text-xs text-neutral-500">
+                        <span class="text-white font-bold text-sm mb-1">images/UG.png</span>
+                        <span>UG Portrait</span>
+                    </div>
+
+                    <!-- Previous / Next Controls -->
+                    <button
+                        type="button"
+                        onclick="changeSlide(-1)"
+                        aria-label="Previous photo"
+                        class="absolute left-3 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/75 border border-white/20 text-white hover:bg-white hover:text-black flex items-center justify-center transition cursor-pointer"
+                    >
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="changeSlide(1)"
+                        aria-label="Next photo"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/75 border border-white/20 text-white hover:bg-white hover:text-black flex items-center justify-center transition cursor-pointer"
+                    >
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+
+                    <!-- Bottom Slide Indicator Pill -->
+                    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 px-2.5 py-1 rounded-full bg-black/75 border border-white/15 backdrop-blur-xs">
+                        <button type="button" id="indicator-0" onclick="goToSlide(0)" class="w-2 h-2 rounded-full bg-white transition cursor-pointer" aria-label="Show PG photo"></button>
+                        <span id="slideCaption" class="font-mono text-[10px] uppercase tracking-wider text-neutral-200 px-0.5">PG</span>
+                        <button type="button" id="indicator-1" onclick="goToSlide(1)" class="w-2 h-2 rounded-full bg-neutral-600 hover:bg-neutral-400 transition cursor-pointer" aria-label="Show UG photo"></button>
+                    </div>
+
+                </div>
+            </div>
+
+        </header>
+
+        <!-- Clean Monochrome Transcript Table -->
+        <section>
+            <div class="bg-neutral-950/80 backdrop-blur-md border border-neutral-800 rounded-xl overflow-hidden shadow-2xl">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-neutral-800 bg-neutral-900/70 font-mono text-[11px] uppercase tracking-wider text-neutral-400">
+                            <th class="py-3 px-4">Milestone</th>
+                            <th class="py-3 px-4 hidden sm:table-cell">Institution</th>
+                            <th class="py-3 px-4">Year</th>
+                            <th class="py-3 px-4">Result</th>
+                            <th class="py-3 px-4 text-right">Document</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transcriptBody" class="divide-y divide-neutral-900 text-sm"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Monochrome PDF Modal -->
+    <div id="pdfModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/85 backdrop-blur-xs" onclick="closeModal()"></div>
+        <div class="relative w-full max-w-4xl h-[88vh] bg-neutral-950 border border-neutral-700 rounded-xl flex flex-col overflow-hidden shadow-2xl z-10">
+            <div class="flex items-center justify-between px-5 py-3 bg-neutral-900 border-b border-neutral-800">
+                <h3 id="modalTitle" class="text-sm font-semibold text-white">Document</h3>
+                <div class="flex items-center gap-2">
+                    <a id="modalDownload" href="#" download class="px-3 py-1 rounded bg-neutral-800 border border-neutral-700 text-xs font-medium text-neutral-200 hover:bg-neutral-700 transition">Download</a>
+                    <button onclick="closeModal()" class="px-3 py-1 rounded bg-white text-xs font-semibold text-black hover:bg-neutral-200 transition cursor-pointer">Close</button>
+                </div>
+            </div>
+            <iframe id="pdfFrame" class="flex-1 w-full bg-white border-none"></iframe>
+        </div>
+    </div>
+
+    <script>
+        const RECORDS = [
+
+            // PG (First Priority)
+
+            { track: 'pg', inst: 'Techno Main Salt Lake', title: 'Semester 1', year: 'X', score: 'X', pdf: 'about:blank' },
+            { track: 'pg', inst: 'Techno Main Salt Lake', title: 'Semester 2', year: 'X', score: 'X', pdf: 'about:blank' },
+            { track: 'pg', inst: 'Techno Main Salt Lake', title: 'Semester 3', year: 'X', score: 'X', pdf: 'about:blank' },
+            { track: 'pg', inst: 'Techno Main Salt Lake', title: 'Semester 4', year: 'X', score: 'X', pdf: 'about:blank' },
+            { track: 'pg', inst: 'Techno Main Salt Lake', title: 'M.Tech Certificate', year: 'X', score: 'X', pdf: 'about:blank' },
+
+            // UG
+
+            { track: 'ug', inst: 'Techno India University', title: 'Semester 1', year: 'December 2022', score: 'SGPA 7.46', pdf: 'UG/Sem01.pdf' },
+            { track: 'ug', inst: 'Techno India University', title: 'Semester 2', year: 'June 2023', score: 'SGPA 6.68', pdf: 'UG/Sem02.pdf' },
+            { track: 'ug', inst: 'Techno India University', title: 'Semester 3', year: 'December 2023', score: 'SGPA 8.40', pdf: 'UG/Sem03.pdf' },
+            { track: 'ug', inst: 'Techno India University', title: 'Semester 4', year: 'June 2024', score: 'SGPA 8.15', pdf: 'UG/Sem04.pdf' },
+            { track: 'ug', inst: 'Techno India University', title: 'Semester 5', year: 'December 2024', score: 'SGPA 7.80', pdf: 'UG/Sem05.pdf' },
+            { track: 'ug', inst: 'Techno India University', title: 'Semester 6', year: 'June 2025', score: 'SGPA 8.11', pdf: 'UG/Sem06.pdf' },
+            { track: 'ug', inst: 'Techno India University', title: 'Semester 7', year: 'December 2025', score: 'SGPA 9.06', pdf: 'UG/Sem07.pdf' },
+            { track: 'ug', inst: 'Techno India University', title: 'Semester 8', year: 'June 2026', score: 'SGPA 9.84', pdf: 'UG/Sem08.pdf' },
+            { track: 'ug', inst: 'Techno India University', title: 'B.Tech Certificate', year: 'August 2026', score: 'CGPA 8.19', bold: true, pdf: 'UG/UG-Cirtificate.pdf' }
+        ];
+
+        let currentTrack = 'pg';
+        let currentSlide = 0;
+
+        function goToSlide(index) {
+            currentSlide = (index + 2) % 2;
+            const labels = ['PG', 'UG'];
+
+            [0, 1].forEach(i => {
+                const img = document.getElementById(`slide-${i}`);
+                const fb = document.getElementById(`fallback-${i}`);
+                const dot = document.getElementById(`indicator-${i}`);
+
+                if (i === currentSlide) {
+                    if (img && img.style.display !== 'none') img.classList.remove('hidden');
+                    if (img && img.style.display === 'none' && fb) fb.classList.remove('hidden');
+                    dot.className = 'w-2 h-2 rounded-full bg-white transition cursor-pointer';
+                } else {
+                    if (img) img.classList.add('hidden');
+                    if (fb) fb.classList.add('hidden');
+                    dot.className = 'w-2 h-2 rounded-full bg-neutral-600 hover:bg-neutral-400 transition cursor-pointer';
+                }
+            });
+
+            document.getElementById('slideCaption').textContent = labels[currentSlide];
+        }
+
+        function changeSlide(step) {
+            goToSlide(currentSlide + step);
+        }
+
+        function switchTrack(track) {
+            currentTrack = track;
+
+            const btnUg = document.getElementById('btn-ug');
+            const btnPg = document.getElementById('btn-pg');
+            const dotUg = document.getElementById('dot-ug');
+            const dotPg = document.getElementById('dot-pg');
+            const subtitle = document.getElementById('institutionSubtitle');
+
+            const activeClasses = 'text-left p-4 rounded-xl border transition-all duration-200 cursor-pointer bg-white/[0.06] border-white shadow-lg opacity-100';
+            const inactiveClasses = 'text-left p-4 rounded-xl border transition-all duration-200 cursor-pointer bg-neutral-950/60 border-neutral-800 hover:border-neutral-600 opacity-65 hover:opacity-100';
+
+            if (track === 'pg') {
+                btnPg.className = activeClasses;
+                btnUg.className = inactiveClasses;
+                dotPg.className = 'w-1.5 h-1.5 rounded-full bg-white';
+                dotUg.className = 'w-1.5 h-1.5 rounded-full bg-neutral-700';
+                subtitle.textContent = 'Techno Main Salt Lake (TMSL)';
+            } else {
+                btnUg.className = activeClasses;
+                btnPg.className = inactiveClasses;
+                dotUg.className = 'w-1.5 h-1.5 rounded-full bg-white';
+                dotPg.className = 'w-1.5 h-1.5 rounded-full bg-neutral-700';
+                subtitle.textContent = 'Techno India University (TIU)';
+            }
+
+            renderTable();
+        }
+
+        function renderTable() {
+            const filtered = RECORDS.filter(r => r.track === currentTrack);
+            const isPg = currentTrack === 'pg';
+
+            document.getElementById('transcriptBody').innerHTML = filtered.map(r => {
+                if (isPg) {
+                    return `
+                        <tr class="hover:bg-white/[0.04] transition-colors duration-150 text-neutral-300">
+                            <td class="py-3.5 px-4 font-medium text-neutral-300">${r.title}</td>
+                            <td class="py-3.5 px-4 text-neutral-300 hidden sm:table-cell">${r.inst}</td>
+                            <td class="py-3.5 px-4 font-mono text-xs text-neutral-300">${r.year}</td>
+                            <td class="py-3.5 px-4 font-mono text-xs text-neutral-300">${r.score}</td>
+                            <td class="py-3.5 px-4 text-right">
+                                <button onclick="openPdf('${r.pdf}', '${r.title}')" class="font-mono text-xs underline underline-offset-4 text-neutral-300 hover:text-white cursor-pointer">View PDF</button>
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                return `
+                    <tr class="hover:bg-white/[0.04] transition-colors duration-150 text-neutral-200">
+                        <td class="py-3.5 px-4 font-medium ${r.bold ? 'font-bold text-white' : ''}">${r.title}</td>
+                        <td class="py-3.5 px-4 text-neutral-400 hidden sm:table-cell">${r.inst}</td>
+                        <td class="py-3.5 px-4 font-mono text-xs text-neutral-500">${r.year}</td>
+                        <td class="py-3.5 px-4 font-mono text-xs font-semibold ${r.bold ? 'text-white' : ''}">${r.score}</td>
+                        <td class="py-3.5 px-4 text-right">
+                            ${r.pdf
+                                ? `<button onclick="openPdf('${r.pdf}', '${r.title}')" class="font-mono text-xs underline underline-offset-4 text-white hover:text-neutral-400 cursor-pointer">View PDF</button>`
+                                : `<span class="font-mono text-xs text-neutral-700">—</span>`}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function openPdf(url, title) {
+            const downloadBtn = document.getElementById('modalDownload');
+            document.getElementById('modalTitle').textContent = title;
+            
+            if (url === 'about:blank') {
+                downloadBtn.style.display = 'none';
+            } else {
+                downloadBtn.style.display = 'inline-block';
+                downloadBtn.href = url;
+            }
+
+            document.getElementById('pdfFrame').src = url;
+            document.getElementById('pdfModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('pdfFrame').src = '';
+            document.getElementById('pdfModal').classList.remove('show');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('pdfModal').classList.contains('show')) closeModal();
+        });
+
+        function initConstellation() {
+            const canvas = document.getElementById('bgCanvas');
+            const ctx = canvas.getContext('2d');
+            let width, height, particles = [];
+            const mouse = { x: null, y: null, radius: 160 };
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                const count = Math.min(Math.floor((width * height) / 16000), 85);
+                particles = Array.from({ length: count }, () => ({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.35,
+                    vy: (Math.random() - 0.5) * 0.35,
+                    r: Math.random() * 1.4 + 0.6
+                }));
+            }
+
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            }, { passive: true });
+
+            window.addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+
+            window.addEventListener('resize', resize);
+            resize();
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0 || p.x > width) p.vx *= -1;
+                    if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const dx = p.x - mouse.x;
+                        const dy = p.y - mouse.y;
+                        const dist = Math.hypot(dx, dy);
+                        if (dist < mouse.radius) {
+                            const alpha = (1 - dist / mouse.radius) * 0.35;
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                            ctx.lineWidth = 0.8;
+                            ctx.stroke();
+
+                            const force = (mouse.radius - dist) / mouse.radius;
+                            p.x += (dx / dist) * force * 0.6;
+                            p.y += (dy / dist) * force * 0.6;
+                        }
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.28)';
+                    ctx.fill();
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                        if (dist < 130) {
+                            const alpha = (1 - dist / 130) * 0.14;
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                            ctx.lineWidth = 0.6;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            goToSlide(0);
+            switchTrack('pg');
+            initConstellation();
+        });
+
+    </script>
+
+</body>
+</html>
