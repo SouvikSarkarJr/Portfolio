@@ -33,6 +33,7 @@
         }
 
         /* Interactive Constellation Canvas */
+        
         #bgCanvas {
             position: fixed;
             inset: 0;
@@ -43,6 +44,7 @@
         }
 
         /* Subtle Top Ambient Vignette */
+        
         .ambient-vignette {
             position: fixed;
             inset: 0;
@@ -117,10 +119,12 @@
             </div>
 
             <!-- Right: Manual Portrait Slideshow Frame (PG & UG) -->
+            
             <div class="w-full md:w-72 lg:w-80 shrink-0">
                 <div class="relative w-full aspect-[4/3] md:aspect-[5/4] rounded-xl border border-neutral-700/90 hover:border-white/50 bg-neutral-950/80 backdrop-blur-md p-2 shadow-2xl overflow-hidden flex items-center justify-center transition-colors duration-300 group">
                     
                     <!-- Slide 1: PG Portrait -->
+                    
                     <img 
                         id="slide-0"
                         src="images/PG.jpg.avif" 
@@ -129,11 +133,12 @@
                         onerror="this.style.display='none'; document.getElementById('fallback-0').classList.remove('hidden');"
                     >
                     <div id="fallback-0" class="hidden flex-col items-center justify-center text-center p-4 font-mono text-xs text-neutral-500">
-                        <span class="text-white font-bold text-sm mb-1">images/PG.png</span>
+                        <span class="text-white font-bold text-sm mb-1">images/pg.jpeg</span>
                         <span>PG Portrait</span>
                     </div>
 
                     <!-- Slide 2: UG Portrait -->
+                    
                     <img 
                         id="slide-1"
                         src="images/UG.png" 
