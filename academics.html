@@ -133,8 +133,8 @@
                         onerror="this.style.display='none'; document.getElementById('fallback-0').classList.remove('hidden');"
                     >
                     <div id="fallback-0" class="hidden flex-col items-center justify-center text-center p-4 font-mono text-xs text-neutral-500">
-                        <span class="text-white font-bold text-sm mb-1">images/pg.jpeg</span>
-                        <span>PG Portrait</span>
+                        <span class="text-white font-bold text-sm mb-1"></span>
+                        <span>Expected PG 2028</span>
                     </div>
 
                     <!-- Slide 2: UG Portrait -->
@@ -151,7 +151,8 @@
                         <span>UG Portrait</span>
                     </div>
 
-                    <!-- Previous / Next Controls -->
+                    <!-- Previous -->
+                    
                     <button
                         type="button"
                         onclick="changeSlide(-1)"
@@ -171,6 +172,7 @@
                     </button>
 
                     <!-- Bottom Slide Indicator Pill -->
+                    
                     <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 px-2.5 py-1 rounded-full bg-black/75 border border-white/15 backdrop-blur-xs">
                         <button type="button" id="indicator-0" onclick="goToSlide(0)" class="w-2 h-2 rounded-full bg-white transition cursor-pointer" aria-label="Show PG photo"></button>
                         <span id="slideCaption" class="font-mono text-[10px] uppercase tracking-wider text-neutral-200 px-0.5">PG</span>
@@ -183,6 +185,7 @@
         </header>
 
         <!-- Clean Monochrome Transcript Table -->
+        
         <section>
             <div class="bg-neutral-950/80 backdrop-blur-md border border-neutral-800 rounded-xl overflow-hidden shadow-2xl">
                 <table class="w-full text-left border-collapse">
@@ -202,6 +205,7 @@
     </div>
 
     <!-- Monochrome PDF Modal -->
+    
     <div id="pdfModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/85 backdrop-blur-xs" onclick="closeModal()"></div>
         <div class="relative w-full max-w-4xl h-[88vh] bg-neutral-950 border border-neutral-700 rounded-xl flex flex-col overflow-hidden shadow-2xl z-10">
